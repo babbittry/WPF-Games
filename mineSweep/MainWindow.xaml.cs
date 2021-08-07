@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using System.Collections;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 
 namespace mineSweep
 {
@@ -46,14 +45,12 @@ namespace mineSweep
 
         TimeState timeState = TimeState.End;    // 初始化计时器状态
         private TimeSpan timeSpan = new TimeSpan(0, 0, 0, 0, 0);
-        private string str = "";
 
         public MainWindow()
         {
             InitializeComponent();
             Title = "扫雷";
             Panel.SetZIndex(GridBorder, 1);         // 设置边框的层级在其它控件之上
-            deepGridButton.Insert(0, Deep0);
 
             // 计时器初始化
             timer = new DispatcherTimer();
@@ -65,13 +62,8 @@ namespace mineSweep
             MinesCounter.Text = RANDOM_MINES_NUM.ToString();        // 剩余地雷数量初始化
             CreateDeepMinesAndNums(RANDOM_MINES_NUM);
             CreateTopGridButton(GRID_NUMS);
-            Deep0.Click += Num0_Click;
         }
 
-        private void Num0_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(str);   // 显示地雷的索引
-        }
 
         private void CreateTopGridButton(int n)
         {
@@ -175,7 +167,7 @@ namespace mineSweep
             }
 
             // 创建底层按钮
-            for (int i = 1; i < GRID_NUMS; i++)
+            for (int i = 0; i < GRID_NUMS; i++)
             {
                 Button btn = new Button();
                 btn.Name = "Deep" + i.ToString();
@@ -209,10 +201,6 @@ namespace mineSweep
                         randomList[j] = temp;
                     }
                 }
-            }
-            for (int i = 0; i < n; i++)
-            {
-                str += randomList[i].ToString() + "...";
             }
 
             // 对生成的数字再次进行处理

@@ -24,12 +24,10 @@
         
         <!--底层，用textblock表示数字或地雷-->
         <UniformGrid x:Name="DeepGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 65, 50, 52">
-            <Button x:Name="Deep0" Width="28" Height="28" Background="AliceBlue" Content="1" Foreground="Blue" FontWeight="Bold" FontSize="22"/>
         </UniformGrid>
         
         <!-- 上层，供用户点击的按钮 -->
         <UniformGrid x:Name="TopGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 65, 50, 52">
-            <Button x:Name="Top0" Width="28" Height="28" Background="AliceBlue" Content="1" Foreground="Blue" FontWeight="Bold" FontSize="22" Visibility="Hidden"/>
 
         </UniformGrid>
     </Grid>
