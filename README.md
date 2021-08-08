@@ -1,9 +1,10 @@
 # WPF-Mine-Sweeper
+
  WPF写的扫雷小游戏
 
 A minesweeper written by WPF
 
-
+参考文章：[WPF桌面应用实例（二）：写一个扫雷游戏](https://blog.csdn.net/OneWord233/article/details/80804593)
 
 ![game screen shots](https://gitee.com/babbittry321/blogImages/raw/master/img/mines-sweeper%20game%20screenshot.png)
 
