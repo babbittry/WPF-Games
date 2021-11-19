@@ -28,7 +28,6 @@
         
         <!-- 上层，供用户点击的按钮 -->
         <UniformGrid x:Name="TopGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 65, 50, 52">
-
         </UniformGrid>
     </Grid>
 </Window>

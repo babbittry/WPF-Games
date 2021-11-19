@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections;
 using System.Windows.Threading;
-using System.Windows.Controls.Primitives;
 
 namespace mineSweep
 {
@@ -119,7 +109,7 @@ namespace mineSweep
         }
 
         /// <summary>
-        /// 上层按钮鼠标点击事件
+        /// 上层按钮鼠标左键点击事件
         /// </summary>
         private void Btn_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
@@ -174,7 +164,7 @@ namespace mineSweep
                 btn.Width = 40;
                 btn.Height = 40;
                 btn.FontSize = 30;
-                
+
                 btn.FontWeight = FontWeights.Normal;
                 btn.Background = Brushes.AliceBlue;
                 if (randomList.Contains(i))
@@ -218,14 +208,14 @@ namespace mineSweep
                 // 处理数字颜色
                 switch (deepGridButton[i].Content.ToString())
                 {
-                    default: { }break;
-                    case "1":deepGridButton[i].Foreground = Brushes.DeepSkyBlue; break;
-                    case "2":deepGridButton[i].Foreground = Brushes.Green; break;
-                    case "3":deepGridButton[i].Foreground = Brushes.OrangeRed; break;
-                    case "4":deepGridButton[i].Foreground = Brushes.DarkBlue; break;
-                    case "5":deepGridButton[i].Foreground = Brushes.DarkRed; break;
-                    case "6":deepGridButton[i].Foreground = Brushes.LightSeaGreen; break;
-                    case "7":deepGridButton[i].Foreground = Brushes.LightSteelBlue; break;
+                    default: { } break;
+                    case "1": deepGridButton[i].Foreground = Brushes.DeepSkyBlue; break;
+                    case "2": deepGridButton[i].Foreground = Brushes.Green; break;
+                    case "3": deepGridButton[i].Foreground = Brushes.OrangeRed; break;
+                    case "4": deepGridButton[i].Foreground = Brushes.DarkBlue; break;
+                    case "5": deepGridButton[i].Foreground = Brushes.DarkRed; break;
+                    case "6": deepGridButton[i].Foreground = Brushes.LightSeaGreen; break;
+                    case "7": deepGridButton[i].Foreground = Brushes.LightSteelBlue; break;
                 }
             }
         }
@@ -328,7 +318,7 @@ namespace mineSweep
                         }
                     }
                 }
-                if(flagCount == minesCount)
+                if (flagCount == minesCount)
                 {
                     Clean8GridWithIndex(n);
                 }
@@ -383,7 +373,7 @@ namespace mineSweep
             }
         }
 
-        
+
 
         /// <summary>
         /// 时间回调方法
