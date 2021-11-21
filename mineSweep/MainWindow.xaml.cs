@@ -13,9 +13,9 @@ namespace mineSweep
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int GRID_NUMS = 100;          // 格子数
         private const int GRID_COLS = 10;           // 列数
         private const int GRID_ROWS = 10;           // 行数
+        private const int GRID_NUMS = ((GRID_COLS) * (GRID_ROWS));    // 格子数 = 行数 * 列数
         private const int RANDOM_MINES_NUM = 10;    // 地雷数
 
         public List<Button> deepGridButton = new List<Button>();       // 底部按钮集合
@@ -25,6 +25,8 @@ namespace mineSweep
 
         Dictionary<string, int> DeepButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
         Dictionary<string, int> TopButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
+
+        int innerMinesCounter = RANDOM_MINES_NUM;    // 内部剩余地雷数量，用于判断是否胜利
 
         private enum TimeState      // 计时器的三种状态
         {
@@ -50,14 +52,17 @@ namespace mineSweep
             timer.Start();
 
             MinesCounter.Text = RANDOM_MINES_NUM.ToString();        // 剩余地雷数量初始化
+            
             CreateDeepMinesAndNums(RANDOM_MINES_NUM);
             CreateTopGridButton(GRID_NUMS);
         }
 
-
+        /// <summary>
+        /// 创建上层按钮
+        /// </summary>
+        /// <param name="n">格子总数</param>
         private void CreateTopGridButton(int n)
         {
-            // 创建上层按钮
             for (int i = 0; i < n; i++)
             {
                 Button btn = new Button();
@@ -88,6 +93,12 @@ namespace mineSweep
             }
             Button btn = sender as Button;
             int minesCounter = int.Parse(MinesCounter.Text);
+            int index = TopButtonIndexDict[btn.Name];
+            // 如果下面是雷，innerMinesCounter 减一
+            if (deepGridButton[index].Content.ToString() == "💣")
+            {
+                innerMinesCounter--;
+            }
             if (btn.Content.ToString() == "")
             {
                 btn.Content = "🚩";
@@ -99,7 +110,7 @@ namespace mineSweep
                 minesCounter++;
             }
             MinesCounter.Text = minesCounter.ToString();
-            if (minesCounter == 0)
+            if ((innerMinesCounter == 0) && (minesCounter == 0))
             {
                 WinText.Visibility = Visibility.Visible;
                 timeState = TimeState.Pause;
@@ -123,7 +134,7 @@ namespace mineSweep
             if (deepGridButton[index].Content.ToString() == "💣")
             {
                 FailText.Visibility = Visibility.Visible;
-                timeState = TimeState.End;
+                timeState = TimeState.Pause;
                 DisableAllButton();
             }
             // 如果点击的是空，则周围8格同时消除
@@ -140,7 +151,7 @@ namespace mineSweep
         /// <param name="n">地雷总数</param>
         private void CreateDeepMinesAndNums(int n)
         {
-            List<int> randomList = new List<int>();     // 生成指定个随机不相等的数
+            List<int> randomList = new List<int>();     // 新建数组，用于生成指定个随机不相等的数
             for (int i = 0; i < n; i++)
             {
             tryAgain:
@@ -164,7 +175,6 @@ namespace mineSweep
                 btn.Width = 40;
                 btn.Height = 40;
                 btn.FontSize = 30;
-
                 btn.FontWeight = FontWeights.Normal;
                 btn.Background = Brushes.AliceBlue;
                 if (randomList.Contains(i))
@@ -230,14 +240,10 @@ namespace mineSweep
         {
             int count = 0;
             // 格子周围8个格子的索引
-            int[] indexArr = { n - GRID_COLS - 1,
-                n - GRID_COLS,
-                n - GRID_COLS + 1,
-                n - 1,
-                n + 1,
-                n + GRID_COLS - 1,
-                n + GRID_COLS,
-                n + GRID_COLS + 1
+            int[] indexArr = { 
+                n - GRID_COLS - 1,  n - GRID_COLS,  n - GRID_COLS + 1,
+                n - 1,                              n + 1,
+                n + GRID_COLS - 1,  n + GRID_COLS,  n + GRID_COLS + 1
             };
             for (int i = 0; i < indexArr.Length; i++)
             {
