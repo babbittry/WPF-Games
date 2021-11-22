@@ -94,20 +94,25 @@ namespace mineSweep
             Button btn = sender as Button;
             int minesCounter = int.Parse(MinesCounter.Text);
             int index = TopButtonIndexDict[btn.Name];
-            // 如果下面是雷，innerMinesCounter 减一
-            if (deepGridButton[index].Content.ToString() == "💣")
-            {
-                innerMinesCounter--;
-            }
             if (btn.Content.ToString() == "")
             {
                 btn.Content = "🚩";
                 minesCounter--;
+                // 如果下面是雷，innerMinesCounter 减一
+                if (deepGridButton[index].Content.ToString() == "💣")
+                {
+                    innerMinesCounter--;
+                }
             }
             else
             {
                 btn.Content = "";
                 minesCounter++;
+                // 如果下面是雷，拔了旗子之后 innerMinesCounter 加一
+                if (deepGridButton[index].Content.ToString() == "💣")
+                {
+                    innerMinesCounter++;
+                }
             }
             MinesCounter.Text = minesCounter.ToString();
             if ((innerMinesCounter == 0) && (minesCounter == 0))
