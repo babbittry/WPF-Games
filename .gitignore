@@ -1,0 +1,15 @@
+.vscode
+*.obj
+*.pch
+*.idb
+*.pdb
+*.ncb 
+*.opt 
+*.plg
+*.res
+*.sbr
+*.ilk
+*.aps
+*.exp
+bin
+obj
