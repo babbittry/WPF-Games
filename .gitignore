@@ -13,3 +13,4 @@
 *.exp
 bin
 obj
+.vs
