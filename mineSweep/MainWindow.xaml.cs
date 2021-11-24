@@ -139,6 +139,7 @@ namespace mineSweep
             if (deepGridButton[index].Content.ToString() == "💣")
             {
                 FailText.Visibility = Visibility.Visible;
+                deepGridButton[index].Content = "💥";
                 timeState = TimeState.Pause;
                 DisableAllButton();
             }
@@ -407,7 +408,7 @@ namespace mineSweep
         {
             for (int i = 0; i < GRID_NUMS; i++)
             {
-                topGridButton[i].IsEnabled = false;
+                topGridButton[i].Visibility = Visibility.Hidden;
                 deepGridButton[i].IsEnabled = false;
             }
         }
