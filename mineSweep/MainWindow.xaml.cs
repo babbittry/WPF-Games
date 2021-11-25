@@ -419,11 +419,6 @@ namespace mineSweep
             MessageBox.Show("你按了暂停");
         }
 
-        private void IndexClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("你按了文件");
-        }
-
         private void RestartClick(object sender, RoutedEventArgs e)
         {
             Process p = new Process();
