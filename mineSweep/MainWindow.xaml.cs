@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -411,6 +412,45 @@ namespace mineSweep
                 topGridButton[i].Visibility = Visibility.Hidden;
                 deepGridButton[i].IsEnabled = false;
             }
+        }
+
+        private void PauseClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("你按了暂停");
+        }
+
+        private void IndexClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("你按了文件");
+        }
+
+        private void RestartClick(object sender, RoutedEventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = System.AppDomain.CurrentDomain.BaseDirectory + "mineSweep.exe";
+            p.StartInfo.UseShellExecute = false;
+            p.Start();
+            Application.Current.Shutdown();
+        }
+
+        private void RangingClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("排行榜");
+        }
+
+        private void HelpClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("帮助");
+        }
+
+        private void AboutClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("关于");
+        }
+
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
