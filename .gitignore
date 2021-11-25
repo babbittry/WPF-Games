@@ -13,4 +13,5 @@
 *.exp
 bin
 obj
+Debug
 .vs
