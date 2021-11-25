@@ -10,7 +10,7 @@
         Height="700" Width="750">
     <Grid>
         <Menu Grid.Row="0" FontSize="14" Width="750" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Background="#f0f0f0">
-            <MenuItem Header="文件" FontSize="15">
+            <MenuItem Header="文件">
                 <MenuItem Header="暂停" Click="PauseClick"/>
                 <MenuItem Header="重新开始" Click="RestartClick"/>
                 <MenuItem Header="英雄榜" Click="RangingClick"/>
@@ -35,11 +35,11 @@
         </StackPanel>
         
         <!--底层，用textblock表示数字或地雷-->
-        <UniformGrid x:Name="DeepGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 65, 50, 52">
+        <UniformGrid x:Name="DeepGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 120, 50, 52">
         </UniformGrid>
         
         <!-- 上层，供用户点击的按钮 -->
-        <UniformGrid x:Name="TopGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 65, 50, 52">
+        <UniformGrid x:Name="TopGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 120, 50, 52">
         </UniformGrid>
     </Grid>
 </Window>
