@@ -23,9 +23,9 @@
         </Menu>
         <!--最上面的文本-->
         <TextBlock Height="48" Width="120" FontSize="35" Text="计时器:" Margin="50, 30, 5, 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock x:Name="TimerText" Height="48" Width="120" FontSize="35" Text="000s" Margin="170, 30, 5, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red"/>
+        <TextBlock x:Name="TimerText" Height="48" Width="120" FontSize="35" Text="0" Margin="170, 30, 5, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red"/>
         <TextBlock Height="48" Width="150" FontSize="35" Text="剩余地雷：" Margin="480, 30, 5, 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock x:Name="MinesCounter" Height="48" Width="80" FontSize="35" Text="00" Margin="635, 30, 5, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red"/>
+        <TextBlock x:Name="MinesCounter" Height="48" Width="80" FontSize="35" Text="10" Margin="635, 30, 5, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Red"/>
         <TextBlock x:Name="WinText" Height="48" Width="150" FontSize="35" Text="排雷成功！" Margin="-20, 30, 5, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="LightGreen" Visibility="Hidden"/>
         <TextBlock x:Name="FailText" Height="48" Width="150" FontSize="35" Text="排雷失败！" Margin="-20, 30, 5, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Red" Visibility="Hidden"/>
         

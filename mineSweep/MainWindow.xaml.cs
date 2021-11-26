@@ -240,44 +240,66 @@ namespace mineSweep
         /// <summary>
         /// 根据周围的地雷生成数字
         /// </summary>
-        /// <param name="n"></param>
-        /// <param name="randomList"></param>
+        /// <param name="n">格子号</param>
+        /// <param name="randomList">炸弹的位置数组</param>
         /// <returns></returns>
         private string CreateNumBaseOnMinesAround(int n, List<int> randomList)
         {
             int count = 0;
+            int[] indexArr = Around8Grid(n);
+
+            for (int i = 0; i < indexArr.Length; i++)
+            {
+                if (randomList.Contains(indexArr[i]))
+                {
+                    count++;
+                }
+            }
+            return count.ToString();
+        }
+        /// <summary>
+        /// 传入一个格子的地址，用数组返回周围 8 个格子的索引号
+        /// </summary>
+        /// <param name="n">格子的索引</param>
+        /// <returns>包含周围 8 个格子地址的数组</returns>
+        private int[] Around8Grid(int n)
+        {
             // 格子周围8个格子的索引
-            int[] indexArr = { 
+            int[] indexArr = {
                 n - GRID_COLS - 1,  n - GRID_COLS,  n - GRID_COLS + 1,
                 n - 1,                              n + 1,
                 n + GRID_COLS - 1,  n + GRID_COLS,  n + GRID_COLS + 1
             };
-            for (int i = 0; i < indexArr.Length; i++)
+
+            // 最左侧的格子
+            if (n % GRID_ROWS == 0)
             {
-                // 最左侧的格子
-                if (n % GRID_ROWS == 0)
-                {
-                    indexArr[0] = -1;
-                    indexArr[3] = -1;
-                    indexArr[5] = -1;
-                }
-                // 最右侧的格子
-                if (n % GRID_ROWS == (GRID_ROWS - 1))
-                {
-                    indexArr[2] = -1;
-                    indexArr[4] = -1;
-                    indexArr[7] = -1;
-                }
-                // 筛选掉范围之外的格子
-                if (indexArr[i] >= 0 && indexArr[i] < GRID_NUMS)
-                {
-                    if (randomList.Contains(indexArr[i]))
-                    {
-                        count++;
-                    }
-                }
+                indexArr[0] = -1;
+                indexArr[3] = -1;
+                indexArr[5] = -1;
             }
-            return count.ToString();
+            // 最右侧的格子
+            else if (n % GRID_ROWS == (GRID_ROWS - 1))
+            {
+                indexArr[2] = -1;
+                indexArr[4] = -1;
+                indexArr[7] = -1;
+            }
+            // 最上面的格子
+            if (n < GRID_ROWS)
+            {
+                indexArr[0] = -1;
+                indexArr[1] = -1;
+                indexArr[2] = -1;
+            }
+            // 最下面一行的格子
+            else if (n > (GRID_NUMS - GRID_ROWS))
+            {
+                indexArr[5] = -1;
+                indexArr[6] = -1;
+                indexArr[7] = -1;
+            }
+            return indexArr;
         }
 
         /// <summary>
@@ -296,41 +318,18 @@ namespace mineSweep
                 }
                 int minesCount = int.Parse(deepGridButton[n].Content.ToString());   // 按下的按键的数字
                 int flagCount = 0;
-                // 格子周围8个格子的索引
-                int[] indexArr = { n - GRID_COLS - 1,
-                    n - GRID_COLS,
-                    n - GRID_COLS + 1,
-                    n - 1,
-                    n + 1,
-                    n + GRID_COLS - 1,
-                    n + GRID_COLS,
-                    n + GRID_COLS + 1
-                };
+                int[] indexArr = Around8Grid(n);
+
                 for (int i = 0; i < indexArr.Length; i++)
                 {
-                    // 最左侧的格子
-                    if (n % GRID_ROWS == 0)
+                    if (indexArr[i] == -1)
+                        continue;
+                    if (topGridButton[indexArr[i]].Content.ToString() == "🚩")
                     {
-                        indexArr[0] = -1;
-                        indexArr[3] = -1;
-                        indexArr[5] = -1;
-                    }
-                    // 最右侧的格子
-                    if (n % GRID_ROWS == (GRID_ROWS - 1))
-                    {
-                        indexArr[2] = -1;
-                        indexArr[4] = -1;
-                        indexArr[7] = -1;
-                    }
-                    // 筛选掉范围之外的格子
-                    if (indexArr[i] >= 0 && indexArr[i] < GRID_NUMS)
-                    {
-                        if (topGridButton[indexArr[i]].Content.ToString() == "🚩")
-                        {
-                            flagCount++;
-                        }
+                        flagCount++;
                     }
                 }
+
                 if (flagCount == minesCount)
                 {
                     Clean8GridWithIndex(n);
@@ -344,34 +343,13 @@ namespace mineSweep
         /// <param name="n"></param>
         private void Clean8GridWithIndex(int n)
         {
-            // 格子周围8个格子的索引
-            int[] indexArr = { n - GRID_COLS - 1,
-                    n - GRID_COLS,
-                    n - GRID_COLS + 1,
-                    n - 1,
-                    n + 1,
-                    n + GRID_COLS - 1,
-                    n + GRID_COLS,
-                    n + GRID_COLS + 1
-                };
+            int[] indexArr = Around8Grid(n);
+
             for (int i = 0; i < indexArr.Length; i++)
             {
-                // 最左侧的格子
-                if (n % GRID_ROWS == 0)
-                {
-                    indexArr[0] = -1;
-                    indexArr[3] = -1;
-                    indexArr[5] = -1;
-                }
-                // 最右侧的格子
-                if (n % GRID_ROWS == (GRID_ROWS - 1))
-                {
-                    indexArr[2] = -1;
-                    indexArr[4] = -1;
-                    indexArr[7] = -1;
-                }
-                // 筛选掉范围之外的格子
-                if (indexArr[i] >= 0 && indexArr[i] < GRID_NUMS && topGridButton[indexArr[i]].Visibility == Visibility.Visible)
+                if (indexArr[i] == -1)
+                    continue;
+                if (topGridButton[indexArr[i]].Visibility == Visibility.Visible)
                 {
                     if (deepGridButton[indexArr[i]].Content.ToString() == "💣")
                     {
