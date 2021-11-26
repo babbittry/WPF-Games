@@ -293,7 +293,7 @@ namespace mineSweep
                 indexArr[2] = -1;
             }
             // 最下面一行的格子
-            else if (n > (GRID_NUMS - GRID_ROWS))
+            else if (n >= (GRID_NUMS - GRID_ROWS))
             {
                 indexArr[5] = -1;
                 indexArr[6] = -1;
