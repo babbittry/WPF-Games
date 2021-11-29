@@ -328,6 +328,14 @@ namespace mineSweep
                     {
                         flagCount++;
                     }
+                    if (deepGridButton[indexArr[i]].Content.ToString() == "💣" && topGridButton[indexArr[i]].Content.ToString() != "🚩")
+                    {
+                        deepGridButton[indexArr[i]].Content = "💥";
+                        timeState = TimeState.Pause;
+                        DisableAllButton();
+                        FailText.Visibility = Visibility.Visible;
+                        break;
+                    }
                 }
 
                 if (flagCount == minesCount)
@@ -443,11 +451,11 @@ namespace mineSweep
         private void HelpClick(object sender, RoutedEventArgs e)
         {
             var destinationurl = "https://www.bilibili.com/video/BV1vz411z7t6/";
-            var sInfo = new System.Diagnostics.ProcessStartInfo(destinationurl)
+            var sInfo = new ProcessStartInfo(destinationurl)
             {
                 UseShellExecute = true,
             };
-            System.Diagnostics.Process.Start(sInfo);
+            Process.Start(sInfo);
         }
 
         private void AboutClick(object sender, RoutedEventArgs e)
