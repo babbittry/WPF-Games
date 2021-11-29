@@ -411,12 +411,11 @@ namespace mineSweep
             {
                 DeepButtonIndexDict.Remove("Deep" + i.ToString());
                 TopButtonIndexDict.Remove("Top" + i.ToString());
-                topGridButton.Clear();
-                deepGridButton.Clear();
-                DeepGrid.Children.Clear();
-                TopGrid.Children.Clear();
             }
-
+            topGridButton.Clear();
+            deepGridButton.Clear();
+            DeepGrid.Children.Clear();
+            TopGrid.Children.Clear();
             CreateDeepMinesAndNums(RANDOM_MINES_NUM);
             CreateTopGridButton(GRID_NUMS);
         }
