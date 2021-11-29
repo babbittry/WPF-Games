@@ -397,7 +397,19 @@ namespace mineSweep
 
         private void PauseClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("你按了暂停");
+            PauseMask.Visibility = Visibility.Visible;
+            timeState = TimeState.Pause;
+
+            MessageBoxResult result = MessageBox.Show("你按了暂停,点击确定继续游戏，点击取消退出游戏！", "暂停中！", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            if(result == MessageBoxResult.OK)
+            {
+                timeState = TimeState.Start;
+                PauseMask.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         private void RestartClick(object sender, RoutedEventArgs e)

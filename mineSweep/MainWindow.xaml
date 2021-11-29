@@ -41,5 +41,8 @@
         <!-- 上层，供用户点击的按钮 -->
         <UniformGrid x:Name="TopGrid" Rows="10" Columns="10" Height="480" Width="480" HorizontalAlignment="Center" Margin="50, 120, 50, 52">
         </UniformGrid>
+        
+        <!-- 暂停时候的遮罩 -->
+        <Grid x:Name="PauseMask" Width="540" Height="540" Background="White" Visibility="Hidden" Margin="50, 120, 50, 52"/>
     </Grid>
 </Window>
