@@ -399,11 +399,26 @@ namespace mineSweep
 
         private void RestartClick(object sender, RoutedEventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = System.AppDomain.CurrentDomain.BaseDirectory + "mineSweep.exe";
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-            Application.Current.Shutdown();
+            timer.Start();
+            timeState = TimeState.End;
+            MinesCounter.Text = RANDOM_MINES_NUM.ToString();        // 剩余地雷数量初始化
+            innerMinesCounter = RANDOM_MINES_NUM;        // 剩余地雷数量初始化
+
+            FailText.Visibility = Visibility.Hidden;
+            WinText.Visibility = Visibility.Hidden;
+
+            for (int i = 0; i < GRID_NUMS;i++)
+            {
+                DeepButtonIndexDict.Remove("Deep" + i.ToString());
+                TopButtonIndexDict.Remove("Top" + i.ToString());
+                topGridButton.Clear();
+                deepGridButton.Clear();
+                DeepGrid.Children.Clear();
+                TopGrid.Children.Clear();
+            }
+
+            CreateDeepMinesAndNums(RANDOM_MINES_NUM);
+            CreateTopGridButton(GRID_NUMS);
         }
 
         private void RangingClick(object sender, RoutedEventArgs e)
