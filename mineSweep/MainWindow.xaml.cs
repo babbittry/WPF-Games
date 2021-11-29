@@ -22,10 +22,10 @@ namespace mineSweep
         public List<Button> deepGridButton = new List<Button>();       // 底部按钮集合
         public List<Button> topGridButton = new List<Button>();        // 上层按钮集合
 
-        private DispatcherTimer timer = null;                           // 计时器
+        private readonly DispatcherTimer timer = null;                           // 计时器
 
-        Dictionary<string, int> DeepButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
-        Dictionary<string, int> TopButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
+        readonly Dictionary<string, int> DeepButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
+        readonly Dictionary<string, int> TopButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
 
         int innerMinesCounter = RANDOM_MINES_NUM;    // 内部剩余地雷数量，用于判断是否胜利
 
@@ -53,7 +53,7 @@ namespace mineSweep
             timer.Start();
 
             MinesCounter.Text = RANDOM_MINES_NUM.ToString();        // 剩余地雷数量初始化
-            
+
             CreateDeepMinesAndNums(RANDOM_MINES_NUM);
             CreateTopGridButton(GRID_NUMS);
         }
