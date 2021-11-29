@@ -442,7 +442,12 @@ namespace mineSweep
 
         private void HelpClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("帮助");
+            var destinationurl = "https://www.bilibili.com/video/BV1vz411z7t6/";
+            var sInfo = new System.Diagnostics.ProcessStartInfo(destinationurl)
+            {
+                UseShellExecute = true,
+            };
+            System.Diagnostics.Process.Start(sInfo);
         }
 
         private void AboutClick(object sender, RoutedEventArgs e)
