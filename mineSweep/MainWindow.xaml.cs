@@ -334,7 +334,7 @@ namespace mineSweep
                         timeState = TimeState.Pause;
                         DisableAllButton();
                         FailText.Visibility = Visibility.Visible;
-                        break;
+                        return;
                     }
                 }
 
