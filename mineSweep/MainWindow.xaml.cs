@@ -22,7 +22,7 @@ namespace mineSweep
         public List<Button> deepGridButton = new List<Button>();       // 底部按钮集合
         public List<Button> topGridButton = new List<Button>();        // 上层按钮集合
 
-        private readonly DispatcherTimer timer = null;                           // 计时器
+        private readonly DispatcherTimer timer = null;                 // 计时器
 
         readonly Dictionary<string, int> DeepButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
         readonly Dictionary<string, int> TopButtonIndexDict = new Dictionary<string, int>();    // 存储底层按钮名字索引的字典
@@ -404,8 +404,8 @@ namespace mineSweep
         {
             timer.Start();
             timeState = TimeState.End;
-            MinesCounter.Text = RANDOM_MINES_NUM.ToString();        // 剩余地雷数量初始化
-            innerMinesCounter = RANDOM_MINES_NUM;        // 剩余地雷数量初始化
+            MinesCounter.Text = RANDOM_MINES_NUM.ToString();        // 显示的剩余地雷数量初始化
+            innerMinesCounter = RANDOM_MINES_NUM;                   // 内部剩余地雷数量初始化
 
             FailText.Visibility = Visibility.Hidden;
             WinText.Visibility = Visibility.Hidden;
@@ -423,7 +423,7 @@ namespace mineSweep
             CreateTopGridButton(GRID_NUMS);
         }
 
-        private void RangingClick(object sender, RoutedEventArgs e)
+        private void RankingClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("排行榜");
         }

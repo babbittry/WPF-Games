@@ -13,7 +13,7 @@
             <MenuItem Header="文件">
                 <MenuItem Header="暂停" Click="PauseClick"/>
                 <MenuItem Header="重新开始" Click="RestartClick"/>
-                <MenuItem Header="英雄榜" Click="RangingClick"/>
+                <MenuItem Header="英雄榜" Click="RankingClick"/>
                 <MenuItem Header="关闭" Click="CloseClick"/>
             </MenuItem>
             <MenuItem Header="关于">
