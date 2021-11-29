@@ -355,7 +355,10 @@ namespace mineSweep
                     {
                         continue;
                     }
-                    topGridButton[indexArr[i]].Visibility = Visibility.Hidden;
+                    if (topGridButton[indexArr[i]].Content.ToString() != "🚩")
+                    {
+                        topGridButton[indexArr[i]].Visibility = Visibility.Hidden;
+                    }
                     if (deepGridButton[indexArr[i]].Content.ToString() == "")
                     {
                         Clean8GridWithIndex(indexArr[i]);
