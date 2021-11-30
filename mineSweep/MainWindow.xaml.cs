@@ -139,10 +139,8 @@ namespace mineSweep
             // 如果点击的是雷，游戏结束
             if (deepGridButton[index].Content.ToString() == "💣")
             {
-                FailText.Visibility = Visibility.Visible;
-                deepGridButton[index].Content = "💥";
-                timeState = TimeState.Pause;
-                DisableAllButton();
+                GameOver(index);
+                return;
             }
             // 如果点击的是空，则周围8格同时消除
             if (deepGridButton[index].Content.ToString() == "")
@@ -330,10 +328,7 @@ namespace mineSweep
                     }
                     if (deepGridButton[indexArr[i]].Content.ToString() == "💣" && topGridButton[indexArr[i]].Content.ToString() != "🚩")
                     {
-                        deepGridButton[indexArr[i]].Content = "💥";
-                        timeState = TimeState.Pause;
-                        DisableAllButton();
-                        FailText.Visibility = Visibility.Visible;
+                        GameOver(indexArr[i]);
                         return;
                     }
                 }
@@ -401,6 +396,17 @@ namespace mineSweep
                 topGridButton[i].Visibility = Visibility.Hidden;
                 deepGridButton[i].IsEnabled = false;
             }
+        }
+        /// <summary>
+        /// 游戏失败的处理
+        /// </summary>
+        /// <param name="index">当前选中的格子</param>
+        private void GameOver(int index)
+        {
+            deepGridButton[index].Content = "💥";
+            timeState = TimeState.Pause;
+            DisableAllButton();
+            FailText.Visibility = Visibility.Visible;
         }
 
         private void PauseClick(object sender, RoutedEventArgs e)
