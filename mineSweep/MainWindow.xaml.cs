@@ -317,6 +317,8 @@ namespace mineSweep
                 int minesCount = int.Parse(deepGridButton[n].Content.ToString());   // 按下的按键的数字
                 int flagCount = 0;
                 int[] indexArr = Around8Grid(n);
+                bool sweepErrorFlag = false;
+                int sweepErrorIndex = 0;
 
                 for (int i = 0; i < indexArr.Length; i++)
                 {
@@ -328,13 +330,18 @@ namespace mineSweep
                     }
                     if (deepGridButton[indexArr[i]].Content.ToString() == "💣" && topGridButton[indexArr[i]].Content.ToString() != "🚩")
                     {
-                        GameOver(indexArr[i]);
-                        return;
+                        sweepErrorFlag = true;
+                        sweepErrorIndex = indexArr[i];
                     }
                 }
 
                 if (flagCount == minesCount)
                 {
+                    if(sweepErrorFlag)
+                    {
+                        GameOver(sweepErrorIndex);
+                        return;
+                    }
                     Clean8GridWithIndex(n);
                 }
             }
