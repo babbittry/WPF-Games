@@ -58,6 +58,7 @@ namespace mineSweep
             CreateTopGridButton(GRID_NUMS);
         }
 
+        #region 创建顶部和底部按钮
         /// <summary>
         /// 创建上层按钮
         /// </summary>
@@ -81,73 +82,6 @@ namespace mineSweep
                 topGridButton.Insert(i, btn);
                 TopGrid.Children.Insert(i, btn);
             }
-        }
-
-        /// <summary>
-        /// 上层鼠标右键点击事件
-        /// </summary>
-        private void Btn_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (timeState == TimeState.End)
-            {
-                timeState = TimeState.Start;
-            }
-            Button btn = sender as Button;
-            int minesCounter = int.Parse(MinesCounter.Text);
-            int index = TopButtonIndexDict[btn.Name];
-            if (btn.Content.ToString() == "")
-            {
-                btn.Content = "🚩";
-                minesCounter--;
-                // 如果下面是雷，innerMinesCounter 减一
-                if (deepGridButton[index].Content.ToString() == "💣")
-                {
-                    innerMinesCounter--;
-                }
-            }
-            else
-            {
-                btn.Content = "";
-                minesCounter++;
-                // 如果下面是雷，拔了旗子之后 innerMinesCounter 加一
-                if (deepGridButton[index].Content.ToString() == "💣")
-                {
-                    innerMinesCounter++;
-                }
-            }
-            MinesCounter.Text = minesCounter.ToString();
-            if ((innerMinesCounter == 0) && (minesCounter == 0))
-            {
-                WinText.Visibility = Visibility.Visible;
-                timeState = TimeState.Pause;
-                MessageBox.Show("你赢了！耗时" + TimerText.Text + "秒");
-                DisableAllButton();
-            }
-        }
-
-        /// <summary>
-        /// 上层按钮鼠标左键点击事件
-        /// </summary>
-        private void Btn_MouseLeftButtonDown(object sender, RoutedEventArgs e)
-        {
-            if (timeState == TimeState.End)
-            {
-                timeState = TimeState.Start;
-            }
-            Button btn = sender as Button;
-            int index = TopButtonIndexDict[btn.Name];
-            // 如果点击的是雷，游戏结束
-            if (deepGridButton[index].Content.ToString() == "💣")
-            {
-                GameOver(index);
-                return;
-            }
-            // 如果点击的是空，则周围8格同时消除
-            if (deepGridButton[index].Content.ToString() == "")
-            {
-                Clean8GridWithIndex(index);
-            }
-            btn.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -234,6 +168,123 @@ namespace mineSweep
                 }
             }
         }
+        #endregion
+
+        #region 左键、右键、双击处理
+        /// <summary>
+        /// 上层鼠标右键点击事件
+        /// </summary>
+        private void Btn_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (timeState == TimeState.End)
+            {
+                timeState = TimeState.Start;
+            }
+            Button btn = sender as Button;
+            int minesCounter = int.Parse(MinesCounter.Text);
+            int index = TopButtonIndexDict[btn.Name];
+            if (btn.Content.ToString() == "")
+            {
+                btn.Content = "🚩";
+                minesCounter--;
+                // 如果下面是雷，innerMinesCounter 减一
+                if (deepGridButton[index].Content.ToString() == "💣")
+                {
+                    innerMinesCounter--;
+                }
+            }
+            else
+            {
+                btn.Content = "";
+                minesCounter++;
+                // 如果下面是雷，拔了旗子之后 innerMinesCounter 加一
+                if (deepGridButton[index].Content.ToString() == "💣")
+                {
+                    innerMinesCounter++;
+                }
+            }
+            MinesCounter.Text = minesCounter.ToString();
+            if ((innerMinesCounter == 0) && (minesCounter == 0))
+            {
+                WinText.Visibility = Visibility.Visible;
+                timeState = TimeState.Pause;
+                MessageBox.Show("你赢了！耗时" + TimerText.Text + "秒");
+                DisableAllButton();
+            }
+        }
+
+        /// <summary>
+        /// 上层按钮鼠标左键点击事件
+        /// </summary>
+        private void Btn_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            if (timeState == TimeState.End)
+            {
+                timeState = TimeState.Start;
+            }
+            Button btn = sender as Button;
+            int index = TopButtonIndexDict[btn.Name];
+            // 如果点击的是雷，游戏结束
+            if (deepGridButton[index].Content.ToString() == "💣")
+            {
+                GameOver(index);
+                return;
+            }
+            // 如果点击的是空，则周围8格同时消除
+            if (deepGridButton[index].Content.ToString() == "")
+            {
+                Clean8GridWithIndex(index);
+            }
+            btn.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// 鼠标左右键一起按下，触发清除事件
+        /// </summary>
+        private void DeepButtonBothClick(object sender, MouseButtonEventArgs e)
+        {
+            var btn = sender as Button;
+            int n = DeepButtonIndexDict[btn.Name];
+            // 判断左右键同时按下
+            if (e.LeftButton == MouseButtonState.Pressed && e.RightButton == MouseButtonState.Pressed)
+            {
+                if (deepGridButton[n].Content.ToString() == "")
+                {
+                    return;
+                }
+                int minesCount = int.Parse(deepGridButton[n].Content.ToString());   // 按下的按键的数字
+                int flagCount = 0;
+                int[] indexArr = Around8Grid(n);
+                bool sweepErrorFlag = false;
+                int sweepErrorIndex = 0;
+
+                for (int i = 0; i < indexArr.Length; i++)
+                {
+                    if (indexArr[i] == -1)
+                        continue;
+                    if (topGridButton[indexArr[i]].Content.ToString() == "🚩")
+                    {
+                        flagCount++;
+                    }
+                    if (deepGridButton[indexArr[i]].Content.ToString() == "💣" && topGridButton[indexArr[i]].Content.ToString() != "🚩")
+                    {
+                        sweepErrorFlag = true;
+                        sweepErrorIndex = indexArr[i];
+                    }
+                }
+
+                if (flagCount == minesCount)
+                {
+                    if (sweepErrorFlag)
+                    {
+                        GameOver(sweepErrorIndex);
+                        return;
+                    }
+                    Clean8GridWithIndex(n);
+                }
+            }
+        }
+        #endregion
 
         /// <summary>
         /// 根据周围的地雷生成数字
@@ -255,6 +306,7 @@ namespace mineSweep
             }
             return count.ToString();
         }
+
         /// <summary>
         /// 传入一个格子的地址，用数组返回周围 8 个格子的索引号
         /// </summary>
@@ -301,53 +353,6 @@ namespace mineSweep
         }
 
         /// <summary>
-        /// 鼠标左右键一起按下，触发清除事件
-        /// </summary>
-        private void DeepButtonBothClick(object sender, MouseButtonEventArgs e)
-        {
-            var btn = sender as Button;
-            int n = DeepButtonIndexDict[btn.Name];
-            // 判断左右键同时按下
-            if (e.LeftButton == MouseButtonState.Pressed && e.RightButton == MouseButtonState.Pressed)
-            {
-                if (deepGridButton[n].Content.ToString() == "")
-                {
-                    return;
-                }
-                int minesCount = int.Parse(deepGridButton[n].Content.ToString());   // 按下的按键的数字
-                int flagCount = 0;
-                int[] indexArr = Around8Grid(n);
-                bool sweepErrorFlag = false;
-                int sweepErrorIndex = 0;
-
-                for (int i = 0; i < indexArr.Length; i++)
-                {
-                    if (indexArr[i] == -1)
-                        continue;
-                    if (topGridButton[indexArr[i]].Content.ToString() == "🚩")
-                    {
-                        flagCount++;
-                    }
-                    if (deepGridButton[indexArr[i]].Content.ToString() == "💣" && topGridButton[indexArr[i]].Content.ToString() != "🚩")
-                    {
-                        sweepErrorFlag = true;
-                        sweepErrorIndex = indexArr[i];
-                    }
-                }
-
-                if (flagCount == minesCount)
-                {
-                    if(sweepErrorFlag)
-                    {
-                        GameOver(sweepErrorIndex);
-                        return;
-                    }
-                    Clean8GridWithIndex(n);
-                }
-            }
-        }
-
-        /// <summary>
         /// 根据索引排除周围8格
         /// </summary>
         /// <param name="n"></param>
@@ -376,7 +381,6 @@ namespace mineSweep
                 }
             }
         }
-
 
 
         /// <summary>
@@ -416,6 +420,7 @@ namespace mineSweep
             FailText.Visibility = Visibility.Visible;
         }
 
+        #region 顶部菜单栏的处理函数
         private void PauseClick(object sender, RoutedEventArgs e)
         {
             PauseMask.Visibility = Visibility.Visible;
@@ -480,5 +485,6 @@ namespace mineSweep
         {
             Application.Current.Shutdown();
         }
+        #endregion
     }
 }
