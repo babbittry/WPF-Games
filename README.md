@@ -22,3 +22,4 @@ A minesweeper written by WPF
   - A：会显示点击了地雷，然后直接失败。
 - 优化全局的 `if` `else` 提高运行效率。
 - 搞清楚 `TimeState` `timeSpan` `timer` 的区别，必要情况下进行优化。
+- 解决点击的第一个就是地雷的问题。
